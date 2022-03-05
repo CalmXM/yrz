@@ -30,7 +30,30 @@ git config --global user.email "email@example.com"
 
 ```plantuml
 @startmindmap
-* linux
-** fd
+<style>
+mindmapDiagram{
+    node{
+        BackgroundColor lightGreen
+    }
+    :depth(1){
+        BackGroundColor white
+    }
+    :depth(2){
+        BackGroundColor cyan
+    }
+}
+</style>
+
+* Git
+** Working Directory
+** Repository
+*** stage
+*** master
 @endmindmap
 ```
+
+![](https://i.bmp.ovh/imgs/2022/03/87914ef022ab21d2.png)
+
+- 工作区是编辑本地文件的地方
+- 暂存区是暂时存放已修改文件的地方
+- 分支
