@@ -50,7 +50,7 @@ class Solution {
 
 ```
 
-## 题解  
+### 题解  
 1. 刚开始的思路是，从开头出发，通过逐一选取数组中的元素，然后以它为中心选取子数组，最后选出和最大的子数组。 如果按这个思路来，我们需要求出以当前元素开头的子数组的和，并记录下来。其他元素重复此动作。最后经过比对，从记录中选取一个最大值。实现如下：
    ```java
    class Solution {
@@ -75,6 +75,47 @@ class Solution {
 
 2. 利用动态规划求解，将复杂的问题分解成多个子问题，最终选出最优解
    1. 子问题定义
-   
+     逐一把每个元素当做是最后一个元素——即求以当前元素结尾的子数组的和
+   2. 状态转移方程（描述子问题之间的联系）
+     如果以当前元素i结尾的子数组<=0，那么后面元素的求解就没有必要再加入这个子数组——一个数加上0或者负数，不可能比当前数大。
+     ![](https://s3.bmp.ovh/imgs/2022/03/849139261e9441a9.png)
+    
+```java
+1. 第一版
+class Solution {
+    public int maxSubArray(int[] nums) {
+        int[] dp = new int[nums.length];
+        dp[0] = nums[0];
 
-   
+        for(int i = 1 ; i < nums.length ; i++){
+            if(dp[i-1] <= 0){
+                dp[i] = nums[i];
+            } else {
+                dp[i] = nums[i] + dp[i-1];
+            }
+        }
+
+        Arrays.sort(dp);
+        return dp[dp.length-1];
+    }
+}
+
+2. 第二版
+class Solution {
+    public int maxSubArray(int[] nums) {
+        int[] dp = new int[nums.length];
+        dp[0] = nums[0];
+
+        int res = dp[0];
+        for(int i = 1 ; i < nums.length ; i++){
+            if(dp[i-1] <= 0){
+                dp[i] = nums[i];
+            } else {
+                dp[i] = nums[i] + dp[i-1];
+            }
+
+            res = Math.max(res,dp[i]);
+        }
+        return res;
+    }
+} 
